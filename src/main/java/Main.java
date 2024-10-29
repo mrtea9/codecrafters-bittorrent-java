@@ -17,7 +17,6 @@ public class Main {
           return;
         }
         System.out.println(gson.toJson(decoded));
-
     } else {
       System.out.println("Unknown command: " + command);
     }
@@ -31,6 +30,7 @@ public class Main {
       return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
     } else if (bencodedString.charAt(0) == 'i') {
       int lastCharIndex = bencodedString.indexOf('e');
+      System.out.println(gson.toJson(Integer.parseInt(bencodedString.substring(1, lastCharIndex - 1))));
       return bencodedString.substring(1, lastCharIndex - 1);
     } else {
       throw new RuntimeException("Only strings are supported at the moment");
