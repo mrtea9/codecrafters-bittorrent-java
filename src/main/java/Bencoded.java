@@ -22,6 +22,6 @@ public class Bencoded {
 
     static long decodeNumber(String bencodedString) {
         int lastCharIndex = bencodedString.indexOf('e');
-        return Long.parseLong(bencodedString.substring(1, lastCharIndex - 1));
+        return Long.parseLong(bencodedString.substring(1, lastCharIndex));
     }
 }
