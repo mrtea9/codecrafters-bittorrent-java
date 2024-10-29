@@ -30,7 +30,8 @@ public class Main {
       int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
       return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
     } else if (bencodedString.charAt(0) == 'i') {
-      return "sad";
+      int lastCharIndex = bencodedString.indexOf('e');
+      return bencodedString.substring(1, lastCharIndex - 1);
     } else {
       throw new RuntimeException("Only strings are supported at the moment");
     }
