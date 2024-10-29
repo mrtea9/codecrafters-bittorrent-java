@@ -5,13 +5,12 @@ public class Main {
   private static final Gson gson = new Gson();
 
   public static void main(String[] args) throws Exception {
-
     String command = args[0];
     if("decode".equals(command)) {
         String bencodedValue = args[1];
         String decoded;
         try {
-          decoded = decodeBencode(bencodedValue);
+          decoded = Bencoded.decodeBencode(bencodedValue);
         } catch(RuntimeException e) {
           System.out.println(e.getMessage());
           return;
@@ -21,20 +20,6 @@ public class Main {
       System.out.println("Unknown command: " + command);
     }
 
-  }
-
-  static String decodeBencode(String bencodedString) {
-    if (Character.isDigit(bencodedString.charAt(0))) {
-      int firstColonIndex = bencodedString.indexOf(':');
-      int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
-      return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
-    } else if (bencodedString.charAt(0) == 'i') {
-      int lastCharIndex = bencodedString.indexOf('e');
-      System.out.println(gson.toJson(Integer.parseInt(bencodedString.substring(1, lastCharIndex - 1))));
-      return bencodedString.substring(1, lastCharIndex - 1);
-    } else {
-      throw new RuntimeException("Only strings are supported at the moment");
-    }
   }
   
 }
