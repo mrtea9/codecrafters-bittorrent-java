@@ -20,8 +20,8 @@ public class Bencoded {
         return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
     }
 
-    static int decodeNumber(String bencodedString) {
+    static long decodeNumber(String bencodedString) {
         int lastCharIndex = bencodedString.indexOf('e');
-        return Integer.parseInt(bencodedString.substring(1, lastCharIndex - 1));
+        return Long.parseLong(bencodedString.substring(1, lastCharIndex - 1));
     }
 }
