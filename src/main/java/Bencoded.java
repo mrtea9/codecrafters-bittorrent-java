@@ -41,7 +41,7 @@ public class Bencoded {
             System.out.println(element);
             i++;
         }
-        System.out.println(bencodedString);
+        System.out.println("sad = " + bencodedString);
         decodedList.add("test");
 
         return decodedList;
