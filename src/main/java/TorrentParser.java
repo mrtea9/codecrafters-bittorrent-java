@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Map;
 import java.security.MessageDigest;
 
@@ -40,15 +39,7 @@ public class TorrentParser {
     }
 
     private static void printPieceHashes(Map<?,?> info) {
-        int i = 0;
-        while (i < ((byte[])info.get("pieces")).length) {
-            byte[] splitted =
-                    Arrays.copyOfRange((byte[])info.get("pieces"), i, i + 20);
-            System.out.print(bytesToHex(splitted));
-            i += 20;
-            if (i < ((byte[])info.get("pieces")).length)
-                System.out.println();
-        }
+        System.out.println(info.get("pieces"));
     }
 
     private String calculateHash(byte[] data) {
