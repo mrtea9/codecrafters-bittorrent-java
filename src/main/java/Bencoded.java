@@ -29,7 +29,7 @@ public class Bencoded {
     }
 
     private String decodeString() {
-
+        System.out.println("encoded string = " + this.encodedString);
         int firstColonIndex = this.encodedString.indexOf(':');
         System.out.println("da");
         int length = Integer.parseInt(this.encodedString.substring(0, firstColonIndex));
