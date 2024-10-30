@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Map;
 import java.security.MessageDigest;
 
@@ -38,15 +39,15 @@ public class TorrentParser {
         printPieceHashes(info);
     }
 
-    private static void printPieceHashes(Map<?,?> infoDict) {
-        var data = (String)infoDict.get("pieces");
-        var bytes = data.getBytes(StandardCharsets.ISO_8859_1);
-        System.out.print("Piece Hashes:");
-        for(int i=0;i<bytes.length; ++i){
-            if(i%20 == 0){
+    private static void printPieceHashes(Map<?,?> info) {
+        int i = 0;
+        while (i < ((byte[])info.get("pieces")).length) {
+            byte[] splitted =
+                    Arrays.copyOfRange((byte[])info.get("pieces"), i, i + 20);
+            System.out.print(bytesToHex(splitted));
+            i += 20;
+            if (i < ((byte[])info.get("pieces")).length)
                 System.out.println();
-            }
-            System.out.printf("%02x", bytes[i]);
         }
     }
 
@@ -63,7 +64,7 @@ public class TorrentParser {
         return bytesToHex(hash);
     }
 
-    private String bytesToHex(byte[] hash) {
+    private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
         for (byte b : hash) {
             hexString.append(String.format("%02x", b));
