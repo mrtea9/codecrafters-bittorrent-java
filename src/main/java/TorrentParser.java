@@ -40,7 +40,7 @@ public class TorrentParser {
 
     private static void printPieceHashes(Map<?,?> infoDict) {
         var data = (String)infoDict.get("pieces");
-        var bytes = data.getBytes();
+        var bytes = data.getBytes(StandardCharsets.ISO_8859_1);
         System.out.print("Piece Hashes:");
         for(int i=0;i<bytes.length; ++i){
             if(i%20 == 0){
