@@ -52,14 +52,14 @@ public class TorrentParser {
 
     private String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
-        int i = 1;
+        int i = 0;
         for (byte b : hash) {
+            i++;
             hexString.append(String.format("%02x", b));
             if (i == 20) {
                 hexString.append("\n");
-                i = 1;
+                i = 0;
             }
-            i++;
         }
 
         return hexString.toString();
