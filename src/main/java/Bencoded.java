@@ -14,8 +14,7 @@ public class Bencoded {
 
     String decodeBencode() {
         if (Character.isDigit(this.encodedString.charAt(0))) {
-            //return gson.toJson(decodeString());
-            return decodeString();
+            return gson.toJson(decodeString());
         } else if (this.encodedString.charAt(0) == 'i') {
             return gson.toJson(decodeNumber());
         } else if (this.encodedString.charAt(0) == 'l') {
@@ -48,7 +47,8 @@ public class Bencoded {
 
     private List<String> decodeList() {
         List<String> decodedList = new ArrayList<String>();
-        if (this.encodedString.equals("le")) return decodedList;
+        //if (this.encodedString.equals("le")) return decodedList;
+
         this.encodedString = this.encodedString.substring(1); // skip the l
         while (!this.encodedString.equals("e")){
             String element = decodeBencode();
