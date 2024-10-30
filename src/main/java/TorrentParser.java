@@ -24,7 +24,7 @@ public class TorrentParser {
 
     private byte[] parseTorrent() {
         Path path = Paths.get(trackerPath);
-        byte[] data;
+        byte[] data = null;
 
         try {
             data = Files.readAllBytes(path);
