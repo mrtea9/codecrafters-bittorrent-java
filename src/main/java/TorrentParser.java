@@ -1,5 +1,6 @@
 import javax.imageio.IIOException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -22,8 +23,8 @@ public class TorrentParser {
             System.out.println(e.getMessage());
             return "error";
         }
-
-        System.out.println(Arrays.toString(data));
+        String str = new String(data, StandardCharsets.UTF_8);
+        System.out.println(str);
         return this.trackerPath;
     }
 }
