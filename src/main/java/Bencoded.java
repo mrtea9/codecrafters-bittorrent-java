@@ -6,50 +6,67 @@ import java.util.List;
 
 public class Bencoded {
     private static final Gson gson = new Gson();
-    private String encodedString;
+    public String encodedString;
 
     public Bencoded(String encodedString) {
         this.encodedString = encodedString;
     }
 
     String decodeBencode() {
-        if (Character.isDigit(encodedString.charAt(0))) {
-            return gson.toJson(decodeString(encodedString));
-        } else if (encodedString.charAt(0) == 'i') {
-            return gson.toJson(decodeNumber(encodedString));
-        } else if (encodedString.charAt(0) == 'l') {
-            return gson.toJson(decodeList(encodedString));
+        if (Character.isDigit(this.encodedString.charAt(0))) {
+            return gson.toJson(decodeString());
+        } else if (this.encodedString.charAt(0) == 'i') {
+            return gson.toJson(decodeNumber());
+        } else if (this.encodedString.charAt(0) == 'l') {
+            return gson.toJson(decodeList());
         } else {
             throw new RuntimeException("Only strings are supported at the moment");
         }
     }
 
-    private String decodeString(String bencodedString) {
-        int firstColonIndex = bencodedString.indexOf(':');
-        int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
-        this.encodedString = bencodedString.substring(2 + length);
-        return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
+    private String takeDecoded() {
+        if (Character.isDigit(this.encodedString.charAt(0))) {
+            return gson.toJson(decodeString());
+        } else if (this.encodedString.charAt(0) == 'i') {
+            return gson.toJson(decodeNumber());
+        } else if (this.encodedString.charAt(0) == 'l') {
+            return gson.toJson(decodeList());
+        } else {
+            throw new RuntimeException("Only strings are supported at the moment");
+        }
     }
 
-    private long decodeNumber(String bencodedString) {
-        int lastCharIndex = bencodedString.indexOf('e');
-        this.encodedString = bencodedString.substring(lastCharIndex);
-        return Long.parseLong(bencodedString.substring(1, lastCharIndex));
+    private String decodeString() {
+        int firstColonIndex = this.encodedString.indexOf(':');
+        int length = Integer.parseInt(this.encodedString.substring(0, firstColonIndex));
+        String result = this.encodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
+
+        this.encodedString = this.encodedString.substring(2 + length);
+
+        System.out.println("encoded string = " + this.encodedString);
+        return result;
     }
 
-    private List<String> decodeList(String bencodedString) {
+    private long decodeNumber() {
+        int lastCharIndex = this.encodedString.indexOf('e');
+        long result = Long.parseLong(this.encodedString.substring(1, lastCharIndex));
+
+        this.encodedString = this.encodedString.substring(lastCharIndex + 1);
+
+        System.out.println("encoded string = " + this.encodedString);
+        return result;
+    }
+
+    private List<String> decodeList() {
         List<String> decodedList = new ArrayList<String>();
-        if (bencodedString.equals("le")) return decodedList;
-        int i = 1; // skipping the first l
-        while (bencodedString.charAt(i) != 'e') {
-            System.out.println("bencoded = " + bencodedString);
-            System.out.println("char at " + i + " = " + bencodedString.charAt(i));
+        if (this.encodedString.equals("le")) return decodedList;
+        this.encodedString = this.encodedString.substring(1); // skip the l
+        while (!this.encodedString.equals("e")){
             String element = decodeBencode();
             System.out.println("element = " + element);
-            i++;
+            System.out.println("encodedString = " + this.encodedString);
+            decodedList.add(element);
         }
-        System.out.println("sad = " + bencodedString);
-        decodedList.add("test");
 
         return decodedList;
     }
