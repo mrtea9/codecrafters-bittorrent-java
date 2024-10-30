@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import javax.imageio.IIOException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -7,6 +9,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 public class TorrentParser {
+    private static final Gson gson = new Gson();
     private String trackerPath;
     private String torrentData;
     private Object decodedTorrent;
@@ -16,7 +19,7 @@ public class TorrentParser {
         this.trackerPath = trackerPath;
         this.torrentData = parseTorrent();
         this.bencoded = new Bencoded(this.torrentData);
-        this.decodedTorrent = bencoded.decodeBencode();
+        this.decodedTorrent = gson.toJson(bencoded.decodeBencode());
 
         System.out.println(this.decodedTorrent);
     }
