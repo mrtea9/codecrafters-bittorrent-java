@@ -27,8 +27,8 @@ public class Main {
         Map<String, Object> decodedTorrent = torrent.getDecodedTorrent();
         Object announce = decodedTorrent.get("announce");
         System.out.println("Tracker URL: " + gson.toJson(announce));
-        Object info = decodedTorrent.get("info");
-        System.out.println(gson.toJson(info));
+        Object info = decodedTorrent.get("length");
+        System.out.println("Length: " + gson.toJson(info));
     } else {
       System.out.println("Unknown command: " + command);
     }
