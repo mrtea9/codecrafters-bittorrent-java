@@ -15,7 +15,6 @@ import java.security.MessageDigest;
 public class TorrentParser {
     private final Bencode bencode = new Bencode(false);
     private final String trackerPath;
-    private final Map<String, Object> decodedTorrent;
     public String announce;
     public long length;
     public String infoHash;
@@ -24,11 +23,11 @@ public class TorrentParser {
         Bencode bencode1 = new Bencode(true);
         this.trackerPath = trackerPath;
         byte[] torrentData = parseTorrent();
-        this.decodedTorrent = decodeFile(torrentData);
 
-        Map<String, Object> info = (Map<String, Object>) this.decodedTorrent.get("info");
+        Map<String, Object> decodedTorrent = decodeFile(torrentData);
+        Map<String, Object> info = (Map<String, Object>)decodedTorrent.get("info");
 
-        this.announce = (String)this.decodedTorrent.get("announce");
+        this.announce = (String) decodedTorrent.get("announce");
         this.length = (long)info.get("length");
 
         byte[] infoEncoded = bencode1.encode((Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info"));
@@ -45,6 +44,10 @@ public class TorrentParser {
             return e.getMessage();
         }
 
+        return bytesToHex(hash);
+    }
+
+    private String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
 
         for (byte b : hash) {
