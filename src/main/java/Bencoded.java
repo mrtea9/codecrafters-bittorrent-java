@@ -34,11 +34,11 @@ public class Bencoded {
         List<String> decodedList = new ArrayList<String>();
         if (bencodedString.equals("le")) return decodedList;
         int i = 1; // skipping the first l
-        System.out.println(bencodedString);
         while (bencodedString.charAt(i) != 'e') {
+            System.out.println("bencoded = " + bencodedString);
             System.out.println(bencodedString.charAt(i));
             String element = decodeBencode(bencodedString.substring(i));
-            System.out.println(element);
+            System.out.println("element = " + element);
             i++;
         }
         System.out.println("sad = " + bencodedString);
