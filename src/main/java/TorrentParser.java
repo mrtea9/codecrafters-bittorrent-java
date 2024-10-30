@@ -29,11 +29,12 @@ public class TorrentParser {
         this.announce = (String) decodedTorrent.get("announce");
         this.length = (long)info.get("length");
 
-        byte[] infoEncoded = bencode1.encode((Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info"));
+        Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
+        byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
 
         this.pieceLength = (long)info.get("piece length");
-        this.piecesHash = (String)info.get("pieces");
+        this.piecesHash = (String)info1.get("pieces");
         System.out.println(bytesToHex(this.piecesHash.getBytes()));
     }
 
