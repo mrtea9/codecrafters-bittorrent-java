@@ -13,7 +13,7 @@ public class Bencoded {
     }
 
     Object decodeBencode() {
-        System.out.println("encodedString = " + this.encodedString);
+       // System.out.println("encodedString = " + this.encodedString);
 
         if (Character.isDigit(this.encodedString.charAt(0))) {
             return decodeString();
