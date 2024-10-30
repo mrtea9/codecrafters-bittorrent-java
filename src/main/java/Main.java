@@ -26,6 +26,7 @@ public class Main {
         TorrentParser torrent = new TorrentParser(trackerPath);
         System.out.println("Tracker URL: " + torrent.announce);
         System.out.println("Length: " + torrent.length);
+        System.out.println("Info Hash: " + torrent.infoHash);
     } else {
       System.out.println("Unknown command: " + command);
     }
