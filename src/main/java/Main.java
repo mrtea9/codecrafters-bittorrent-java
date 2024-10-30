@@ -24,11 +24,8 @@ public class Main {
     } else if ("info".equals(command)) {
         String trackerPath = args[1];
         TorrentParser torrent = new TorrentParser(trackerPath);
-        Map<String, Object> decodedTorrent = torrent.getDecodedTorrent();
-        Object announce = decodedTorrent.get("announce");
-        System.out.println("Tracker URL: " + gson.toJson(announce));
-        Object info = decodedTorrent.get("length");
-        //System.out.println("Length: " + gson.toJson(info));
+        System.out.println("Tracker URL: " + torrent.announce);
+        System.out.println("Length: " + torrent.length);
     } else {
       System.out.println("Unknown command: " + command);
     }

@@ -12,16 +12,20 @@ public class TorrentParser {
     private final Bencode bencode = new Bencode();
     private final String trackerPath;
     private final Map<String, Object> decodedTorrent;
+    public String announce;
+    public long length;
 
     public TorrentParser(String trackerPath) {
         this.trackerPath = trackerPath;
         byte[] torrentData = parseTorrent();
         this.decodedTorrent = decodeFile(torrentData);
+
+        Map<String, Object> info = (Map<String, Object>) this.decodedTorrent.get("info");
+
+        this.announce = (String)this.decodedTorrent.get("announce");
+        this.length = (long)info.get("length");
     }
 
-    public Map<String, Object> getDecodedTorrent() {
-        return this.decodedTorrent;
-    }
 
     private Map<String, Object> decodeFile(byte[] torrentFile) {
         return bencode.decode(torrentFile, Type.DICTIONARY);
