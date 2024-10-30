@@ -13,7 +13,7 @@ import java.util.Map;
 import java.security.MessageDigest;
 
 public class TorrentParser {
-    private final Bencode bencode = new Bencode();
+    private final Bencode bencode = new Bencode(false);
     private final String trackerPath;
     private final Map<String, Object> decodedTorrent;
     public String announce;
@@ -21,16 +21,17 @@ public class TorrentParser {
     public String infoHash;
 
     public TorrentParser(String trackerPath) {
+        Bencode bencode1 = new Bencode(true);
         this.trackerPath = trackerPath;
         byte[] torrentData = parseTorrent();
         this.decodedTorrent = decodeFile(torrentData);
 
         Map<String, Object> info = (Map<String, Object>) this.decodedTorrent.get("info");
-        byte[] infoEncoded = bencode.encode(info);
 
         this.announce = (String)this.decodedTorrent.get("announce");
         this.length = (long)info.get("length");
 
+        byte[] infoEncoded = bencode1.encode((Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info"));
         this.infoHash = calculateHash(infoEncoded);
     }
 
