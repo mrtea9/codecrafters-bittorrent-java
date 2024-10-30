@@ -32,7 +32,7 @@ public class Bencoded {
 
         this.encodedString = this.encodedString.substring(2 + length);
 
-        System.out.println("encoded string = " + this.encodedString);
+        //System.out.println("encoded string = " + this.encodedString);
         return result;
     }
 
@@ -42,7 +42,7 @@ public class Bencoded {
 
         this.encodedString = this.encodedString.substring(lastCharIndex + 1);
 
-        System.out.println("encoded string = " + this.encodedString);
+        //System.out.println("encoded string = " + this.encodedString);
         return result;
     }
 
@@ -56,6 +56,7 @@ public class Bencoded {
 //            System.out.println("encodedString = " + this.encodedString);
             decodedList.add(element);
         }
+        this.encodedString = this.encodedString.substring(1); // skip the e
 
         return decodedList;
     }
