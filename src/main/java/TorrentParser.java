@@ -19,10 +19,10 @@ public class TorrentParser {
     public TorrentParser(String trackerPath) {
         this.trackerPath = trackerPath;
         this.torrentData = parseTorrent();
-        this.bencoded = new Bencoded(this.torrentData);
-        this.decodedTorrent = bencoded.decodeBencode();
+        //this.bencoded = new Bencoded(this.torrentData);
+        //this.decodedTorrent = bencoded.decodeBencode();
 
-        System.out.println(gson.toJson(this.decodedTorrent));
+        System.out.println(gson.toJson(this.torrentData));
     }
 
     private String parseTorrent() {
