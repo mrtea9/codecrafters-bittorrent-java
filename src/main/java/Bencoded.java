@@ -36,7 +36,7 @@ public class Bencoded {
         int i = 1; // skipping the first l
         while (bencodedString.charAt(i) != 'e') {
             System.out.println("bencoded = " + bencodedString);
-            System.out.println(bencodedString.charAt(i));
+            System.out.println("char at " + i + " = " + bencodedString.charAt(i));
             String element = decodeBencode(bencodedString.substring(i));
             System.out.println("element = " + element);
             i++;
