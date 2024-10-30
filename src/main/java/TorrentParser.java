@@ -35,12 +35,12 @@ public class TorrentParser {
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
 
-        printPieceHashes(info);
+        printPieceHashes((String)info.get("pieces"));
     }
 
-    private static void printPieceHashes(Map<?,?> info) {
-        byte[] bytes = (byte[]) info.get("pieces");
-        System.out.println(bytes);
+    private static void printPieceHashes(String pieces) {
+        byte[] bytes = pieces.getBytes();
+        System.out.println(bytesToHex(bytes));
     }
 
     private String calculateHash(byte[] data) {
