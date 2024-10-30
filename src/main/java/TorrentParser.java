@@ -1,10 +1,7 @@
 import com.dampcake.bencode.Type;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import com.dampcake.bencode.Bencode;
-
-import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -18,6 +15,7 @@ public class TorrentParser {
     public String announce;
     public long length;
     public String infoHash;
+    public long piece_length;
 
     public TorrentParser(String trackerPath) {
         Bencode bencode1 = new Bencode(true);
@@ -32,6 +30,8 @@ public class TorrentParser {
 
         byte[] infoEncoded = bencode1.encode((Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info"));
         this.infoHash = calculateHash(infoEncoded);
+
+        this.piece_length = (long)info.get("piece length");
     }
 
     private String calculateHash(byte[] data) {
