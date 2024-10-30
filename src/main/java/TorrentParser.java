@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.security.MessageDigest;
 
@@ -34,8 +35,14 @@ public class TorrentParser {
     }
 
     private String calculateHash(byte[] data) {
-        MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-        byte[] hash = sha1.digest(data);
+        byte[] hash = null;
+        try {
+            MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+            hash = sha1.digest(data);
+        } catch (NoSuchAlgorithmException e) {
+            return e.getMessage();
+        }
+
 
         BigInteger no = new BigInteger(1, hash);
         String hashText = no.toString(16);
