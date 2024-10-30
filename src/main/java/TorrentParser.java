@@ -34,7 +34,6 @@ public class TorrentParser {
         this.infoHash = calculateHash(infoEncoded);
 
         this.pieceLength = (long)info.get("piece length");
-        this.piecesHash = info1.get("pieces");
         System.out.println(bytesToHex(info.get("pieces").toString().getBytes()));
     }
 
