@@ -17,6 +17,8 @@ public class Main {
           return;
         }
         System.out.println(decoded);
+    } else if ("info".equals(command)) {
+        System.out.println(args[1]);
     } else {
       System.out.println("Unknown command: " + command);
     }
