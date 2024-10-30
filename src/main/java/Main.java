@@ -11,12 +11,12 @@ public class Main {
         String decoded;
         Bencoded bencoded = new Bencoded(bencodedValue);
         try {
-          decoded = bencoded.decodeBencode();
+          decoded = gson.toJson(bencoded.decodeBencode());
         } catch(RuntimeException e) {
           System.out.println(e.getMessage());
           return;
         }
-        System.out.println(decoded);
+        System.out.println(decoded.toString());
     } else {
       System.out.println("Unknown command: " + command);
     }
