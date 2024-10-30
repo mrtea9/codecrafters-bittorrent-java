@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 
 import com.dampcake.bencode.Bencode;
 import com.dampcake.bencode.Type;
+import java.util.Map;
 
 public class Main {
   private static final Gson gson = new Gson();
@@ -23,6 +24,8 @@ public class Main {
     } else if ("info".equals(command)) {
         String trackerPath = args[1];
         TorrentParser torrent = new TorrentParser(trackerPath);
+        Map<String, Object> decodedTorrent = torrent.getDecodedTorrent();
+        System.out.println(gson.toJson(decodedTorrent));
 
     } else {
       System.out.println("Unknown command: " + command);

@@ -12,20 +12,21 @@ import java.util.Map;
 
 public class TorrentParser {
     private static final Gson gson = new Gson();
-    private String trackerPath;
-    private byte[] torrentData;
-    private Map<String, Object> decodedTorrent;
-    private Bencode bencode = new Bencode();
+    private final Bencode bencode = new Bencode();
+    private final String trackerPath;
+    private final Map<String, Object> decodedTorrent;
 
     public TorrentParser(String trackerPath) {
         this.trackerPath = trackerPath;
-        this.torrentData = parseTorrent();
+        byte[] torrentData = parseTorrent();
         this.decodedTorrent = decodeFile(torrentData);
-
-        System.out.println(gson.toJson(decodedTorrent));
     }
 
-    public Map<String, Object> decodeFile(byte[] torrentFile) {
+    public Map<String, Object> getDecodedTorrent() {
+        return this.decodedTorrent;
+    }
+
+    private Map<String, Object> decodeFile(byte[] torrentFile) {
         return bencode.decode(torrentFile, Type.DICTIONARY);
     }
 
