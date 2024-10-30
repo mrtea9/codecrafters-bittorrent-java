@@ -55,7 +55,7 @@ public class TorrentParser {
         int i = 0;
         for (byte b : hash) {
             hexString.append(String.format("%02x", b));
-            if (i == 39) {
+            if (i == 20) {
                 hexString.append("\n");
                 i = 0;
             }
