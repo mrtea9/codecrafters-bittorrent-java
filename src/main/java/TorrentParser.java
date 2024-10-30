@@ -38,8 +38,9 @@ public class TorrentParser {
             return "error";
         }
 
-        //return new String(data, StandardCharsets.UTF_8);
         System.out.println(Base64.getEncoder().encodeToString(data));
-        return Base64.getEncoder().encodeToString(data);
+
+        return new String(data, StandardCharsets.UTF_8);
+        //return Base64.getEncoder().encodeToString(data);
     }
 }
