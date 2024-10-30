@@ -13,7 +13,7 @@ public class TorrentParser {
     private String trackerPath;
     private byte[] torrentData;
     private Object decodedTorrent;
-    private Bencoded bencoded;
+    private Bencoded bencoded = new Bencoded("sad");
 
     public TorrentParser(String trackerPath) {
         this.trackerPath = trackerPath;
