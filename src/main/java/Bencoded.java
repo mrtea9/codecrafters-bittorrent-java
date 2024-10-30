@@ -13,6 +13,8 @@ public class Bencoded {
     }
 
     Object decodeBencode() {
+        System.out.println("encodedString = " + this.encodedString);
+
         if (Character.isDigit(this.encodedString.charAt(0))) {
             return decodeString();
         } else if (this.encodedString.charAt(0) == 'i') {
@@ -49,13 +51,15 @@ public class Bencoded {
         List<Object> decodedList = new ArrayList<Object>();
 
         this.encodedString = this.encodedString.substring(1); // skip the l
-        while (!this.encodedString.equals("e")){
+        while (this.encodedString.charAt(0) != 'e'){
             Object element = decodeBencode();
-//            System.out.println("element = " + element);
-//            System.out.println("encodedString = " + this.encodedString);
+            //System.out.println("element = " + element);
+            //System.out.println("encodedString = " + this.encodedString);
             decodedList.add(element);
+            //System.out.println("decodedList = " + decodedList.toString());
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
+        //System.out.println("encodedString end = " + this.encodedString);
 
         return decodedList;
     }
