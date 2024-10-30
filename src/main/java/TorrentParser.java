@@ -22,7 +22,7 @@ public class TorrentParser {
         this.bencoded = new Bencoded(this.torrentData);
         this.decodedTorrent = bencoded.decodeBencode();
 
-        System.out.println(gson.toJson(bencoded.decodeBencode()));
+        System.out.println(gson.toJson(this.decodedTorrent));
     }
 
     private String parseTorrent() {
