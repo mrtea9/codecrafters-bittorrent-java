@@ -13,7 +13,8 @@ public class Main {
         String decoded;
         Bencode bencode = new Bencode();
         try {
-          decoded = gson.toJson(bencode.decode(bencodedValue.getBytes(), bencode.type(bencodedValue.getBytes())));
+             byte[] bencodedBytes = bencodedValue.getBytes();
+             decoded = gson.toJson(bencode.decode(bencodedBytes, bencode.type(bencodedBytes)));
         } catch(RuntimeException e) {
           System.out.println(e.getMessage());
           return;
@@ -21,7 +22,8 @@ public class Main {
         System.out.println(decoded);
     } else if ("info".equals(command)) {
         String trackerPath = args[1];
-        TorrentParser parser = new TorrentParser(trackerPath);
+        TorrentParser torrent = new TorrentParser(trackerPath);
+
     } else {
       System.out.println("Unknown command: " + command);
     }
