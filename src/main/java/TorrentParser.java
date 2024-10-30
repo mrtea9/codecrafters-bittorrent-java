@@ -1,4 +1,9 @@
-
+import javax.imageio.IIOException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 public class TorrentParser {
     private String trackerPath;
@@ -8,8 +13,17 @@ public class TorrentParser {
     }
 
     public String parseTorrent() {
+        Path path = Paths.get(trackerPath);
+        byte[] data;
 
-        System.out.println(this.trackerPath);
+        try {
+            data = Files.readAllBytes(path);
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
+            return "error";
+        }
+
+        System.out.println(Arrays.toString(data));
         return this.trackerPath;
     }
 }
