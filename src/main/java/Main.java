@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
-// import com.dampcake.bencode.Bencode; - available if you need it!
+import com.dampcake.bencode.Bencode;
+import com.dampcake.bencode.Type;
 
 public class Main {
   private static final Gson gson = new Gson();
@@ -10,9 +11,9 @@ public class Main {
     if("decode".equals(command)) {
         String bencodedValue = args[1];
         String decoded;
-        Bencoded bencoded = new Bencoded(bencodedValue);
+        Bencode bencode = new Bencode();
         try {
-          decoded = gson.toJson(bencoded.decodeBencode());
+          decoded = gson.toJson(bencode.decode(bencodedValue.getBytes(), bencode.type(bencodedValue.getBytes())));
         } catch(RuntimeException e) {
           System.out.println(e.getMessage());
           return;
