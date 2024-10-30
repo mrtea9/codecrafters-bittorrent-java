@@ -32,7 +32,7 @@ public class Bencoded {
 
     static List<String> decodeList(String bencodedString) {
         List<String> decodedList = new ArrayList<String>();
-
+        System.out.println(bencodedString);
         decodedList.add("test");
 
         return decodedList;
