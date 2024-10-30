@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.Base64;
 
 public class TorrentParser {
     private static final Gson gson = new Gson();
@@ -37,6 +38,7 @@ public class TorrentParser {
             return "error";
         }
 
-        return new String(data, StandardCharsets.UTF_8);
+        //return new String(data, StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(data);
     }
 }
