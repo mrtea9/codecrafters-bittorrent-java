@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 
@@ -14,15 +16,18 @@ public class Bencoded {
 
     Object decodeBencode() {
        // System.out.println("encodedString = " + this.encodedString);
+        char firstChar = this.encodedString.charAt(0);
 
-        if (Character.isDigit(this.encodedString.charAt(0))) {
+        if (Character.isDigit(firstChar)) {
             return decodeString();
-        } else if (this.encodedString.charAt(0) == 'i') {
+        } else if (firstChar == 'i') {
             return decodeNumber();
-        } else if (this.encodedString.charAt(0) == 'l') {
+        } else if (firstChar == 'l') {
             return decodeList();
+        } else if (firstChar == 'd') {
+            return decodeDict();
         } else {
-            throw new RuntimeException("Only strings are supported at the moment");
+            throw new RuntimeException("Invalid bencoded value");
         }
     }
 
@@ -62,5 +67,13 @@ public class Bencoded {
         //System.out.println("encodedString end = " + this.encodedString);
 
         return decodedList;
+    }
+
+    private Dictionary<String, Object> decodeDict() {
+        Dictionary<String, Object> decodedDict = new Hashtable<>();
+
+        decodedDict.put("sad", 24);
+
+        return decodedDict;
     }
 }
