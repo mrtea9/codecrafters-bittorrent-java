@@ -6,12 +6,9 @@ import com.dampcake.bencode.Bencode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
-import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Map;
 
 public class TorrentParser {
-    private static final Gson gson = new Gson();
     private final Bencode bencode = new Bencode();
     private final String trackerPath;
     private final Map<String, Object> decodedTorrent;

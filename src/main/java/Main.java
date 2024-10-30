@@ -25,8 +25,9 @@ public class Main {
         String trackerPath = args[1];
         TorrentParser torrent = new TorrentParser(trackerPath);
         Map<String, Object> decodedTorrent = torrent.getDecodedTorrent();
-        System.out.println(gson.toJson(decodedTorrent));
-
+        Object announce = decodedTorrent.get("announce");
+        System.out.println(gson.toJson(announce));
+        Object info = decodedTorrent.get("info");
     } else {
       System.out.println("Unknown command: " + command);
     }
