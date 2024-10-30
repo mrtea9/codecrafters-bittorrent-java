@@ -2,6 +2,8 @@ import com.dampcake.bencode.Type;
 
 import java.io.IOException;
 import com.dampcake.bencode.Bencode;
+
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -33,8 +35,19 @@ public class TorrentParser {
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
 
-        this.pieceLength = (long)info.get("piece length");
-        System.out.println(bytesToHex(info.get("pieces").toString().getBytes()));
+        printPieceHashes(info);
+    }
+
+    private static void printPieceHashes(Map<?,?> infoDict) {
+        var data = (String)infoDict.get("pieces");
+        var bytes = data.getBytes(StandardCharsets.ISO_8859_1);
+        System.out.print("Piece Hashes:");
+        for(int i=0;i<bytes.length; ++i){
+            if(i%20 == 0){
+                System.out.println();
+            }
+            System.out.printf("%02x", bytes[i]);
+        }
     }
 
     private String calculateHash(byte[] data) {
@@ -52,16 +65,9 @@ public class TorrentParser {
 
     private String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder();
-        int i = 0;
         for (byte b : hash) {
-            i++;
             hexString.append(String.format("%02x", b));
-            if (i == 20) {
-                hexString.append("\n");
-                i = 0;
-            }
         }
-
         return hexString.toString();
     }
 
