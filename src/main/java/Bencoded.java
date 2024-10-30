@@ -1,10 +1,13 @@
+import com.dampcake.bencode.Type;
 import com.google.gson.Gson;
 
 import java.util.*;
+import com.dampcake.bencode.Bencode;
 
 
 public class Bencoded {
     private static final Gson gson = new Gson();
+    private static final Bencode bencode = new Bencode();
     public String encodedString;
 
     public Bencoded(String encodedString) {
@@ -26,6 +29,13 @@ public class Bencoded {
         } else {
             throw new RuntimeException("Invalid bencoded value");
         }
+    }
+
+    public Map<String, Object> decodeFile(byte[] torrentFile) {
+        final Map<String, Object> torrentFileDecoded =
+                bencode.decode(torrentFile, Type.DICTIONARY);
+        System.out.println(gson.toJson(torrentFileDecoded));
+        return bencode.decode(torrentFile, Type.DICTIONARY);
     }
 
     private String decodeString() {
