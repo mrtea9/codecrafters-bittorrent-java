@@ -31,10 +31,11 @@ public class Bencoded {
     private String decodeString() {
         System.out.println("encoded string len = " + this.encodedString.length());
         int firstColonIndex = this.encodedString.indexOf(':');
+        System.out.println("firstColonIndex = " + firstColonIndex);
         int length = Integer.parseInt(this.encodedString.substring(0, firstColonIndex));
         System.out.println("length = " + length);
         int numDigits = Integer.toString(length).length();
-        System.out.println("da3");
+        System.out.println("numDigits = " + numDigits);
         String result = this.encodedString.substring(firstColonIndex + 1, firstColonIndex + 1 + length);
         System.out.println("result = " + result);
         this.encodedString = this.encodedString.substring(numDigits + 1 + length);
