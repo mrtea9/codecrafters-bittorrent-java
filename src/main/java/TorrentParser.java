@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.Map;
+import java.security.MessageDigest;
 
 public class TorrentParser {
     private final Bencode bencode = new Bencode();
@@ -24,8 +25,9 @@ public class TorrentParser {
 
         this.announce = (String)this.decodedTorrent.get("announce");
         this.length = (long)info.get("length");
-    }
 
+
+    }
 
     private Map<String, Object> decodeFile(byte[] torrentFile) {
         return bencode.decode(torrentFile, Type.DICTIONARY);
