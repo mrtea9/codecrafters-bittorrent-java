@@ -56,15 +56,12 @@ public class Bencoded {
         List<Object> decodedList = new ArrayList<Object>();
 
         this.encodedString = this.encodedString.substring(1); // skip the l
-        while (this.encodedString.charAt(0) != 'e'){
+        char firstChar = this.encodedString.charAt(0);
+        while (firstChar != 'e'){
             Object element = decodeBencode();
-            //System.out.println("element = " + element);
-            //System.out.println("encodedString = " + this.encodedString);
             decodedList.add(element);
-            //System.out.println("decodedList = " + decodedList.toString());
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
-        //System.out.println("encodedString end = " + this.encodedString);
 
         return decodedList;
     }
@@ -72,7 +69,14 @@ public class Bencoded {
     private Dictionary<String, Object> decodeDict() {
         Dictionary<String, Object> decodedDict = new Hashtable<>();
 
-        decodedDict.put("sad", 24);
+        this.encodedString = this.encodedString.substring(1); // skip the d
+        char firstChar = this.encodedString.charAt(0);
+        while (firstChar != 'e') {
+            Object key = decodeBencode();
+            Object value = decodeBencode();
+            decodedDict.put(key.toString(), value);
+        }
+        this.encodedString = this.encodedString.substring(1); // skip the e
 
         return decodedDict;
     }
