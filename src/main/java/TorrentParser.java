@@ -15,7 +15,8 @@ public class TorrentParser {
     public String announce;
     public long length;
     public String infoHash;
-    public long piece_length;
+    public long pieceLength;
+    public String piecesHash;
 
     public TorrentParser(String trackerPath) {
         Bencode bencode1 = new Bencode(true);
@@ -31,7 +32,8 @@ public class TorrentParser {
         byte[] infoEncoded = bencode1.encode((Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info"));
         this.infoHash = calculateHash(infoEncoded);
 
-        this.piece_length = (long)info.get("piece length");
+        this.pieceLength = (long)info.get("piece length");
+        this.piecesHash = bytesToHex((byte[]) info.get("pieces"));
     }
 
     private String calculateHash(byte[] data) {
