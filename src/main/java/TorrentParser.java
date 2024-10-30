@@ -30,9 +30,10 @@ public class TorrentParser {
             data = Files.readAllBytes(path);
         } catch(IOException e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
 
-        System.out.println(Base64.getEncoder().encodeToString(data));
+        //System.out.println(Base64.getEncoder().encodeToString(data));
         return data;
         //return new String(data, StandardCharsets.UTF_8);
         //return Base64.getEncoder().encodeToString(data);
