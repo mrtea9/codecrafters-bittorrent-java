@@ -38,7 +38,8 @@ public class TorrentParser {
         byte[] hash = null;
         try {
             MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
-            hash = sha1.digest(data);
+            sha1.update(data);
+            hash = sha1.digest();
         } catch (NoSuchAlgorithmException e) {
             return e.getMessage();
         }
