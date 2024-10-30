@@ -32,6 +32,12 @@ public class Bencoded {
 
     static List<String> decodeList(String bencodedString) {
         List<String> decodedList = new ArrayList<String>();
+        if (bencodedString.equals("le")) return decodedList;
+        int i = 1; // skipping the first l
+        while (bencodedString.charAt(i) != 'e') {
+            System.out.println(bencodedString.charAt(i));
+            i++;
+        }
         System.out.println(bencodedString);
         decodedList.add("test");
 
