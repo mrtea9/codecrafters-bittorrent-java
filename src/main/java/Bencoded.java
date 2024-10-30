@@ -36,7 +36,7 @@ public class Bencoded {
         int numDigits = Integer.toString(length).length();
         System.out.println("da3");
         String result = this.encodedString.substring(firstColonIndex + 1, firstColonIndex + 1 + length);
-
+        System.out.println("result = " + result);
         this.encodedString = this.encodedString.substring(numDigits + 1 + length);
 
         //System.out.println("encoded string = " + this.encodedString);
