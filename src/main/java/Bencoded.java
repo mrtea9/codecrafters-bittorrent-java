@@ -14,19 +14,8 @@ public class Bencoded {
 
     String decodeBencode() {
         if (Character.isDigit(this.encodedString.charAt(0))) {
-            return gson.toJson(decodeString());
-        } else if (this.encodedString.charAt(0) == 'i') {
-            return gson.toJson(decodeNumber());
-        } else if (this.encodedString.charAt(0) == 'l') {
-            return gson.toJson(decodeList());
-        } else {
-            throw new RuntimeException("Only strings are supported at the moment");
-        }
-    }
-
-    private String takeDecoded() {
-        if (Character.isDigit(this.encodedString.charAt(0))) {
-            return gson.toJson(decodeString());
+            //return gson.toJson(decodeString());
+            return decodeString();
         } else if (this.encodedString.charAt(0) == 'i') {
             return gson.toJson(decodeNumber());
         } else if (this.encodedString.charAt(0) == 'l') {
@@ -63,8 +52,8 @@ public class Bencoded {
         this.encodedString = this.encodedString.substring(1); // skip the l
         while (!this.encodedString.equals("e")){
             String element = decodeBencode();
-            System.out.println("element = " + element);
-            System.out.println("encodedString = " + this.encodedString);
+//            System.out.println("element = " + element);
+//            System.out.println("encodedString = " + this.encodedString);
             decodedList.add(element);
         }
 
