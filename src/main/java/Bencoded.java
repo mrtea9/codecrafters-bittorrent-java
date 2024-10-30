@@ -45,12 +45,12 @@ public class Bencoded {
         return result;
     }
 
-    private List<String> decodeList() {
-        List<String> decodedList = new ArrayList<String>();
+    private List<Object> decodeList() {
+        List<Object> decodedList = new ArrayList<Object>();
 
         this.encodedString = this.encodedString.substring(1); // skip the l
         while (!this.encodedString.equals("e")){
-            String element = decodeBencode();
+            Object element = decodeBencode();
 //            System.out.println("element = " + element);
 //            System.out.println("encodedString = " + this.encodedString);
             decodedList.add(element);

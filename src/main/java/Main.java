@@ -16,7 +16,7 @@ public class Main {
           System.out.println(e.getMessage());
           return;
         }
-        System.out.println(decoded.toString());
+        System.out.println(decoded);
     } else {
       System.out.println("Unknown command: " + command);
     }
