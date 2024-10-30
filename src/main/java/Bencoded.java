@@ -11,7 +11,7 @@ public class Bencoded {
         this.encodedString = encodedString;
     }
 
-    Object decodeBencode() {
+    public Object decodeBencode() {
         //System.out.println("encodedString = " + this.encodedString);
         char firstChar = this.encodedString.charAt(0);
 

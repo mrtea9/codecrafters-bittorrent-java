@@ -8,12 +8,20 @@ import java.util.Arrays;
 
 public class TorrentParser {
     private String trackerPath;
+    private String torrentData;
+    private Object decodedTorrent;
+    private Bencoded bencoded;
 
     public TorrentParser(String trackerPath) {
         this.trackerPath = trackerPath;
+        this.torrentData = parseTorrent();
+        this.bencoded = new Bencoded(this.torrentData);
+        this.decodedTorrent = bencoded.decodeBencode();
+
+        System.out.println(this.decodedTorrent);
     }
 
-    public String parseTorrent() {
+    private String parseTorrent() {
         Path path = Paths.get(trackerPath);
         byte[] data;
 
@@ -23,8 +31,7 @@ public class TorrentParser {
             System.out.println(e.getMessage());
             return "error";
         }
-        String str = new String(data, StandardCharsets.UTF_8);
-        System.out.println(str);
-        return this.trackerPath;
+
+        return new String(data, StandardCharsets.UTF_8);
     }
 }

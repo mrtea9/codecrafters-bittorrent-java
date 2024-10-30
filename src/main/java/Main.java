@@ -22,7 +22,6 @@ public class Main {
     } else if ("info".equals(command)) {
         String trackerPath = args[1];
         TorrentParser parser = new TorrentParser(trackerPath);
-        parser.parseTorrent();
     } else {
       System.out.println("Unknown command: " + command);
     }
