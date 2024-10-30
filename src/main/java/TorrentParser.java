@@ -39,7 +39,8 @@ public class TorrentParser {
     }
 
     private static void printPieceHashes(Map<?,?> info) {
-        System.out.println(info.get("pieces"));
+        byte[] bytes = (byte[]) info.get("pieces");
+        System.out.println(bytes);
     }
 
     private String calculateHash(byte[] data) {
