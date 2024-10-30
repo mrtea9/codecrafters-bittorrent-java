@@ -29,13 +29,16 @@ public class Bencoded {
     }
 
     private String decodeString() {
+
         int firstColonIndex = this.encodedString.indexOf(':');
+        System.out.println("da");
         int length = Integer.parseInt(this.encodedString.substring(0, firstColonIndex));
+        System.out.println("da2");
         int numDigits = Integer.toString(length).length();
+        System.out.println("da3");
         String result = this.encodedString.substring(firstColonIndex + 1, firstColonIndex + 1 + length);
 
         this.encodedString = this.encodedString.substring(numDigits + 1 + length);
-        System.out.println("result = " + result);
 
         //System.out.println("encoded string = " + this.encodedString);
         return result;
