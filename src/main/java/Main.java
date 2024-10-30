@@ -1,4 +1,6 @@
 import com.google.gson.Gson;
+
+import javax.swing.text.html.parser.Parser;
 // import com.dampcake.bencode.Bencode; - available if you need it!
 
 public class Main {
@@ -18,7 +20,9 @@ public class Main {
         }
         System.out.println(decoded);
     } else if ("info".equals(command)) {
-        System.out.println(args[1]);
+        String trackerPath = args[1];
+        TorrentParser parser = new TorrentParser(trackerPath);
+        parser.parseTorrent();
     } else {
       System.out.println("Unknown command: " + command);
     }
