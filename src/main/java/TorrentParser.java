@@ -43,14 +43,13 @@ public class TorrentParser {
             return e.getMessage();
         }
 
+        StringBuilder hexString = new StringBuilder();
 
-        BigInteger no = new BigInteger(1, hash);
-        String hashText = no.toString(16);
-
-        while (hashText.length() < 40) {
-            hashText = "0" + hashText;
+        for (byte b : hash) {
+            hexString.append(String.format("%02x", b));
         }
-        return hashText;
+
+        return hexString.toString();
     }
 
     private Map<String, Object> decodeFile(byte[] torrentFile) {
