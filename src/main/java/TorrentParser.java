@@ -9,6 +9,7 @@ public class TorrentParser {
 
     public String parseTorrent() {
 
+        System.out.println(this.trackerPath);
         return this.trackerPath;
     }
 }
