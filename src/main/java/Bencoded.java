@@ -1,5 +1,8 @@
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Bencoded {
     private static final Gson gson = new Gson();
@@ -9,6 +12,8 @@ public class Bencoded {
             return gson.toJson(decodeString(bencodedString));
         } else if (bencodedString.charAt(0) == 'i') {
             return gson.toJson(decodeNumber(bencodedString));
+        } else if (bencodedString.charAt(0) == 'l') {
+            return gson.toJson(decodeList(bencodedString));
         } else {
             throw new RuntimeException("Only strings are supported at the moment");
         }
@@ -23,5 +28,13 @@ public class Bencoded {
     static long decodeNumber(String bencodedString) {
         int lastCharIndex = bencodedString.indexOf('e');
         return Long.parseLong(bencodedString.substring(1, lastCharIndex));
+    }
+
+    static List<String> decodeList(String bencodedString) {
+        List<String> decodedList = new ArrayList<String>();
+
+        decodedList.add("test");
+
+        return decodedList;
     }
 }
