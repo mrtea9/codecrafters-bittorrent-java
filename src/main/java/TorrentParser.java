@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.AbstractMap;
 import java.util.Arrays;
 
 public class TorrentParser {
@@ -19,9 +20,9 @@ public class TorrentParser {
         this.trackerPath = trackerPath;
         this.torrentData = parseTorrent();
         this.bencoded = new Bencoded(this.torrentData);
-        this.decodedTorrent = gson.toJson(bencoded.decodeBencode());
+        this.decodedTorrent = bencoded.decodeBencode();
 
-        System.out.println(this.decodedTorrent);
+        System.out.println(gson.toJson(bencoded.decodeBencode()));
     }
 
     private String parseTorrent() {
