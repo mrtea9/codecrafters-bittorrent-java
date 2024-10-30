@@ -15,7 +15,7 @@ public class Bencoded {
     }
 
     Object decodeBencode() {
-       // System.out.println("encodedString = " + this.encodedString);
+        //System.out.println("encodedString = " + this.encodedString);
         char firstChar = this.encodedString.charAt(0);
 
         if (Character.isDigit(firstChar)) {
@@ -60,6 +60,8 @@ public class Bencoded {
         while (firstChar != 'e'){
             Object element = decodeBencode();
             decodedList.add(element);
+
+            firstChar = this.encodedString.charAt(0);
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
 
@@ -75,6 +77,8 @@ public class Bencoded {
             Object key = decodeBencode();
             Object value = decodeBencode();
             decodedDict.put(key.toString(), value);
+
+            firstChar = this.encodedString.charAt(0);
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
 
