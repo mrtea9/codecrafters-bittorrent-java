@@ -18,7 +18,6 @@ public class TorrentParser {
     public long length;
     public String infoHash;
     public long pieceLength;
-    public String piecesHash;
 
     public TorrentParser(String trackerPath) {
         Bencode bencode1 = new Bencode(true);
@@ -30,6 +29,7 @@ public class TorrentParser {
 
         this.announce = (String) decodedTorrent.get("announce");
         this.length = (long)info.get("length");
+        this.pieceLength = (long)info.get("piece length");
 
         Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
         byte[] infoEncoded = bencode1.encode(info1);
@@ -40,7 +40,7 @@ public class TorrentParser {
 
     private static void printPieceHashes(Map<?,?> infoDict) {
         var data = (String)infoDict.get("pieces");
-        var bytes = data.getBytes(StandardCharsets.ISO_8859_1);
+        var bytes = data.getBytes();
         System.out.print("Piece Hashes:");
         for(int i=0;i<bytes.length; ++i){
             if(i%20 == 0){
