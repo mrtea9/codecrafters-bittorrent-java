@@ -6,38 +6,43 @@ import java.util.List;
 
 public class Bencoded {
     private static final Gson gson = new Gson();
+    public String encodedString;
 
-    static String decodeBencode(String bencodedString) {
-        if (Character.isDigit(bencodedString.charAt(0))) {
-            return gson.toJson(decodeString(bencodedString));
-        } else if (bencodedString.charAt(0) == 'i') {
-            return gson.toJson(decodeNumber(bencodedString));
-        } else if (bencodedString.charAt(0) == 'l') {
-            return gson.toJson(decodeList(bencodedString));
+    public Bencoded(String encodedString) {
+        this.encodedString = encodedString;
+    }
+
+    String decodeBencode() {
+        if (Character.isDigit(encodedString.charAt(0))) {
+            return gson.toJson(decodeString(encodedString));
+        } else if (encodedString.charAt(0) == 'i') {
+            return gson.toJson(decodeNumber(encodedString));
+        } else if (encodedString.charAt(0) == 'l') {
+            return gson.toJson(decodeList(encodedString));
         } else {
             throw new RuntimeException("Only strings are supported at the moment");
         }
     }
 
-    static String decodeString(String bencodedString) {
+    private static String decodeString(String bencodedString) {
         int firstColonIndex = bencodedString.indexOf(':');
         int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
         return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
     }
 
-    static long decodeNumber(String bencodedString) {
+    private static long decodeNumber(String bencodedString) {
         int lastCharIndex = bencodedString.indexOf('e');
         return Long.parseLong(bencodedString.substring(1, lastCharIndex));
     }
 
-    static List<String> decodeList(String bencodedString) {
+    private List<String> decodeList(String bencodedString) {
         List<String> decodedList = new ArrayList<String>();
         if (bencodedString.equals("le")) return decodedList;
         int i = 1; // skipping the first l
         while (bencodedString.charAt(i) != 'e') {
             System.out.println("bencoded = " + bencodedString);
             System.out.println("char at " + i + " = " + bencodedString.charAt(i));
-            String element = decodeBencode(bencodedString.substring(i));
+            String element = this.decodeBencode();
             System.out.println("element = " + element);
             i++;
         }

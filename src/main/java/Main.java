@@ -9,8 +9,9 @@ public class Main {
     if("decode".equals(command)) {
         String bencodedValue = args[1];
         String decoded;
+        Bencoded bencoded = new Bencoded(bencodedValue);
         try {
-          decoded = Bencoded.decodeBencode(bencodedValue);
+          decoded = bencoded.decodeBencode();
         } catch(RuntimeException e) {
           System.out.println(e.getMessage());
           return;
