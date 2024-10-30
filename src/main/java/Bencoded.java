@@ -1,9 +1,6 @@
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 
 public class Bencoded {
@@ -68,8 +65,8 @@ public class Bencoded {
         return decodedList;
     }
 
-    private Dictionary<String, Object> decodeDict() {
-        Dictionary<String, Object> decodedDict = new Hashtable<>();
+    private AbstractMap<String, Object> decodeDict() {
+        AbstractMap<String, Object> decodedDict = new HashMap<>();
 
         this.encodedString = this.encodedString.substring(1); // skip the d
         char firstChar = this.encodedString.charAt(0);
@@ -77,7 +74,7 @@ public class Bencoded {
             Object key = decodeBencode();
             Object value = decodeBencode();
             decodedDict.put(key.toString(), value);
-
+            System.out.println("decodedDict = " + decodedDict.toString());
             firstChar = this.encodedString.charAt(0);
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
