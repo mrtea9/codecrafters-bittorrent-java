@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bencoded {
     private static final Gson gson = new Gson();
-    private final String encodedString;
+    private String encodedString;
 
     public Bencoded(String encodedString) {
         this.encodedString = encodedString;
@@ -24,14 +24,16 @@ public class Bencoded {
         }
     }
 
-    private static String decodeString(String bencodedString) {
+    private String decodeString(String bencodedString) {
         int firstColonIndex = bencodedString.indexOf(':');
         int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
+        this.encodedString = bencodedString.substring(2 + length);
         return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
     }
 
-    private static long decodeNumber(String bencodedString) {
+    private long decodeNumber(String bencodedString) {
         int lastCharIndex = bencodedString.indexOf('e');
+        this.encodedString = bencodedString.substring(lastCharIndex);
         return Long.parseLong(bencodedString.substring(1, lastCharIndex));
     }
 
@@ -42,6 +44,8 @@ public class Bencoded {
         while (bencodedString.charAt(i) != 'e') {
             System.out.println("bencoded = " + bencodedString);
             System.out.println("char at " + i + " = " + bencodedString.charAt(i));
+            String element = decodeBencode();
+            System.out.println("element = " + element);
             i++;
         }
         System.out.println("sad = " + bencodedString);
