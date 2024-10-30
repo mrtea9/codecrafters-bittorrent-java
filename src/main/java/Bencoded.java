@@ -73,8 +73,9 @@ public class Bencoded {
         while (firstChar != 'e') {
             Object key = decodeBencode();
             Object value = decodeBencode();
+
             decodedDict.put(key.toString(), value);
-            System.out.println("decodedDict = " + decodedDict.toString());
+
             firstChar = this.encodedString.charAt(0);
         }
         this.encodedString = this.encodedString.substring(1); // skip the e
