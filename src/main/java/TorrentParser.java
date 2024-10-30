@@ -3,6 +3,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import com.dampcake.bencode.Bencode;
+
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -32,9 +34,16 @@ public class TorrentParser {
     }
 
     private String calculateHash(byte[] data) {
+        MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
+        byte[] hash = sha1.digest(data);
 
+        BigInteger no = new BigInteger(1, hash);
+        String hashText = no.toString(16);
 
-        return "da";
+        while (hashText.length() < 40) {
+            hashText = "0" + hashText;
+        }
+        return hashText;
     }
 
     private Map<String, Object> decodeFile(byte[] torrentFile) {
