@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Bencoded {
     private static final Gson gson = new Gson();
-    public String encodedString;
+    private final String encodedString;
 
     public Bencoded(String encodedString) {
         this.encodedString = encodedString;
@@ -42,8 +42,6 @@ public class Bencoded {
         while (bencodedString.charAt(i) != 'e') {
             System.out.println("bencoded = " + bencodedString);
             System.out.println("char at " + i + " = " + bencodedString.charAt(i));
-            String element = this.decodeBencode();
-            System.out.println("element = " + element);
             i++;
         }
         System.out.println("sad = " + bencodedString);
