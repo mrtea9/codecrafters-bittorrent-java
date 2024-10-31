@@ -77,7 +77,7 @@ public class Peer {
             int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
 
             System.out.println("Peer IP: " + ip + ":" + port);
-            this.peersList.add(ip + port);
+            this.peersList.add(ip + ":" + port);
         }
     }
 }
