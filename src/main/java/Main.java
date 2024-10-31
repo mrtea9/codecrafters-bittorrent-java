@@ -68,6 +68,7 @@ public class Main {
 
   private static void processDownloadPiece(String fileToCreate, String trackerPath, int pieceIndex) {
       Torrent torrent = new Torrent(trackerPath);
+      DownloaderPiece downloaderPiece = new DownloaderPiece(torrent, fileToCreate, pieceIndex);
 
       System.out.println(torrent.announce);
       System.out.println(fileToCreate);
