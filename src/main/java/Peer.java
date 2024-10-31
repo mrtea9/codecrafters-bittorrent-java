@@ -58,6 +58,11 @@ public class Peer {
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             ByteBuffer peersBuffer = (ByteBuffer)result.get("peers");
+            peersBuffer.rewind();
+            byte[] bytes = new byte[peersBuffer.remaining()];
+            peersBuffer.get(bytes);
+            peersBuffer.rewind();
+            System.out.println(Torrent.bytesToHex(bytes));
             System.out.println(gson.toJson(peersBuffer));
             System.out.println(gson.toJson(result));
         } catch (InterruptedException | IOException e) {
