@@ -14,6 +14,7 @@ public class DownloaderPiece {
         this.peer = new Peer(torrent);
         this.peer.performGetRequest();
 
-        peerConnection = new PeerConnection(this.peer.peersList.getFirst(), torrent);
+        this.peerConnection = new PeerConnection(this.peer.peersList.getFirst(), torrent);
+        this.peerConnection.creatingConnection();
     }
 }
