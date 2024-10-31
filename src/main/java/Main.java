@@ -72,6 +72,7 @@ public class Main {
       System.out.println(torrent.announce);
       System.out.println(fileToCreate);
       System.out.println(pieceIndex);
+
   }
 
   private static void printInfo(Torrent torrent) {
