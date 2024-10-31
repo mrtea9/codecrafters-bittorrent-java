@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -57,6 +58,8 @@ public class Peer {
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             String peers = (String)result.get("peers");
             System.out.println(result.toString());
+            InetAddress ip = InetAddress.getByAddress(peers.getBytes());
+            System.out.println(ip.getHostAddress());
             System.out.println(gson.toJson(peers.getBytes()));
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
