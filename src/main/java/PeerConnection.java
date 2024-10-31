@@ -19,7 +19,7 @@ public class PeerConnection {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out.println("test");
+            out.println(19);
 
             String response = in.readLine();
             System.out.println(response);
