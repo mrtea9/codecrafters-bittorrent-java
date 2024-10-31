@@ -2,7 +2,6 @@ import com.google.gson.Gson;
 
 import com.dampcake.bencode.Bencode;
 
-import java.net.http.HttpClient;
 
 public class Main {
   private static final Gson gson = new Gson();
