@@ -2,6 +2,8 @@ import com.google.gson.Gson;
 
 import com.dampcake.bencode.Bencode;
 
+import java.net.http.HttpClient;
+
 public class Main {
   private static final Gson gson = new Gson();
 
@@ -24,8 +26,8 @@ public class Main {
       } else if ("peers".equals(command)) {
           String trackerPath = args[1];
           Torrent torrent = new Torrent(trackerPath);
-
-          System.out.println(torrent.announce);
+          Peer peer = new Peer(torrent);
+          System.out.println(peer.discoverPeers());
       }
       else {
           System.out.println("Unknown command: " + command);
