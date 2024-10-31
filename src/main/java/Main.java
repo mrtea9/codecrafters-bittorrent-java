@@ -25,7 +25,7 @@ public class Main {
           String trackerPath = args[1];
           Torrent torrent = new Torrent(trackerPath);
 
-          System.out.println("este");
+          System.out.println(torrent.announce);
       }
       else {
           System.out.println("Unknown command: " + command);
