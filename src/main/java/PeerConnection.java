@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
@@ -22,10 +19,10 @@ public class PeerConnection {
 
         try {
             Socket socket = new Socket(ip, port);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            OutputStream out = socket.getOutputStream();
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out.println(handshake);
+            out.write(handshake.array());
 
             String response = in.readLine();
             System.out.println(response);
