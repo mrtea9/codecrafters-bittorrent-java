@@ -58,11 +58,8 @@ public class Main {
 
   private static void processHandshake(String trackerPath, String address) {
       Torrent torrent = new Torrent(trackerPath);
-      int colonIndex = address.indexOf(':');
-      String ip = address.substring(0, colonIndex);
-      int port = Integer.parseInt(address.substring(colonIndex + 1));
 
-      PeerConnection peerConnection = new PeerConnection(ip, port, torrent);
+      PeerConnection peerConnection = new PeerConnection(address, torrent);
       peerConnection.creatingConnection();
   }
 

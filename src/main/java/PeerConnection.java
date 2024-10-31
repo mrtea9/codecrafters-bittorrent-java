@@ -8,7 +8,11 @@ public class PeerConnection {
     private int port;
     private Torrent torrent;
 
-    public PeerConnection(String ip, int port, Torrent torrent) {
+    public PeerConnection(String address, Torrent torrent) {
+        int colonIndex = address.indexOf(':');
+        String ip = address.substring(0, colonIndex);
+        int port = Integer.parseInt(address.substring(colonIndex + 1));
+
         this.ip = ip;
         this.port = port;
         this.torrent = torrent;
