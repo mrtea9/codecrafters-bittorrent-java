@@ -41,7 +41,7 @@ public class Main {
       torrent.printPieceHashes();
   }
 
-  private static String getDecoded(String bencodedValue) {
+  public static String getDecoded(String bencodedValue) {
       Bencode bencode = new Bencode();
       String decoded;
       try {

@@ -5,10 +5,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.function.Supplier;
+import com.dampcake.bencode.Bencode;
 
 public class Peer {
     private final Torrent torrent;
+    private final Bencode bencode = new Bencode();
 
     public Peer(Torrent torrent) {
         this.torrent = torrent;
@@ -46,6 +47,8 @@ public class Peer {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("status code: " + response.statusCode());
             System.out.println("response body: " + response.body());
+            String decoded = Main.getDecoded(response.body());
+            System.out.println(decoded);
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
