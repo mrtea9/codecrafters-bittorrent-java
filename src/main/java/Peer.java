@@ -62,6 +62,17 @@ public class Peer {
             byte[] bytes = new byte[peersBuffer.remaining()];
             peersBuffer.get(bytes);
             peersBuffer.rewind();
+            for (int i = 0; i <= bytes.length - 6; i += 6) {
+                // Extract 4 bytes for IP
+                byte[] ipBytes = new byte[4];
+                System.arraycopy(bytes, i, ipBytes, 0, 4);
+                String ip = InetAddress.getByAddress(ipBytes).getHostAddress();
+
+                // Extract 2 bytes for port
+                int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
+
+                System.out.println("Peer IP: " + ip + ", Port: " + port);
+            }
             System.out.println(Torrent.bytesToHex(bytes));
             //System.out.println(gson.toJson(peersBuffer));
             //System.out.println(gson.toJson(result));
