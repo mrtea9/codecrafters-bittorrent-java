@@ -54,7 +54,8 @@ public class Main {
       int colonIndex = address.indexOf(':');
       String ip = address.substring(0, colonIndex);
       int port = Integer.parseInt(address.substring(colonIndex + 1));
-      System.out.println(ip + ":" + port);
+
+      PeerConnection peerConnection = new PeerConnection(ip, port);
   }
 
   private static void printInfo(Torrent torrent) {
