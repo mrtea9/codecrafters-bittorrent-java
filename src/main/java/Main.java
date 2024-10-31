@@ -25,7 +25,14 @@ public class Main {
           String address = args[2];
 
           processHandshake(trackerPath, address);
-      } else {
+      } else if ("download_piece".equals(command)) {
+          String fileToCreate = args[2];
+          String trackerPath = args[3];
+          int pieceIndex = Integer.parseInt(args[4]);
+
+          processDownloadPiece(fileToCreate, trackerPath, pieceIndex);
+      }
+      else {
           System.out.println("Unknown command: " + command);
       }
   }
@@ -57,6 +64,14 @@ public class Main {
 
       PeerConnection peerConnection = new PeerConnection(ip, port, torrent);
       peerConnection.creatingConnection();
+  }
+
+  private static void processDownloadPiece(String fileToCreate, String trackerPath, int pieceIndex) {
+      Torrent torrent = new Torrent(trackerPath);
+
+      System.out.println(torrent.announce);
+      System.out.println(fileToCreate);
+      System.out.println(pieceIndex);
   }
 
   private static void printInfo(Torrent torrent) {
