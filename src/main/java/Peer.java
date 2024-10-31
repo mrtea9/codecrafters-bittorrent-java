@@ -55,7 +55,7 @@ public class Peer {
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             System.out.println(result.toString());
-            System.out.println(gson.toJson(result));
+            System.out.println(gson.toJson(result.get("peers")));
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
