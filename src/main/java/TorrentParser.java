@@ -40,7 +40,11 @@ public class TorrentParser {
         Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
         ByteBuffer piecesBuffer = (ByteBuffer)info1.get("pieces");
         System.out.println("info1 = " + info1.toString());
-        System.out.println("piecesBuffer = " + piecesBuffer.toString());
+        piecesBuffer.rewind();
+        byte[] bytes = new byte[piecesBuffer.remaining()];
+        piecesBuffer.get(bytes);
+        piecesBuffer.rewind();
+        System.out.println(bytesToHex(bytes));
 
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
