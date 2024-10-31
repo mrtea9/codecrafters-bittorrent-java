@@ -49,7 +49,7 @@ public class Peer {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("status code: " + response.statusCode());
             System.out.println("response body: " + response.body());
-            System.out.println("bytes to hex: " + new String(response.body().getBytes(), StandardCharsets.UTF_8));
+            System.out.println("bytes to hex: " + new String(response.body().getBytes(), StandardCharsets.ISO_8859_1));
             String decoded = Main.getDecoded(response.body());
             System.out.println(decoded);
         } catch (InterruptedException | IOException e) {
