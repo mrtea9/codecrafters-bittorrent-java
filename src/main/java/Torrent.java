@@ -52,8 +52,6 @@ public class Torrent {
         ByteBuffer piecesBuffer = (ByteBuffer)this.infoBytes.get("pieces");
         piecesBuffer.rewind();
         byte[] bytes = new byte[piecesBuffer.remaining()];
-        piecesBuffer.get(bytes);
-        piecesBuffer.rewind();
         System.out.println(bytesToHex(bytes));
     }
 
