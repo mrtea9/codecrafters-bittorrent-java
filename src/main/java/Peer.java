@@ -8,9 +8,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import com.dampcake.bencode.Bencode;
+import com.dampcake.bencode.Type;
+import com.google.gson.Gson;
 
 public class Peer {
     private final Torrent torrent;
+    private static final Gson gson = new Gson();
     private final Bencode bencode = new Bencode();
 
     public Peer(Torrent torrent) {
@@ -53,6 +56,7 @@ public class Peer {
             for (byte b : responseBodyBytes) {
                 hexString.append(String.format("%02x", b));
             }
+            System.out.println(gson.toJson(bencode.decode(responseBodyBytes, Type.DICTIONARY)));
             System.out.println("response body in hex: " + hexString.toString());
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
