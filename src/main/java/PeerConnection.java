@@ -20,7 +20,7 @@ public class PeerConnection {
 
         try {
             Socket socket = new Socket(ip, port);
-            byte[] response = new byte[69];
+            byte[] response = new byte[68];
 
             OutputStream out = socket.getOutputStream();
             InputStream in = socket.getInputStream();
@@ -29,7 +29,9 @@ public class PeerConnection {
             int bytesRead = in.read(response);
 
             System.out.println("bytesRead = " + bytesRead);
-            System.out.println("response = " + new String(response, StandardCharsets.UTF_8));
+            byte[] receivedPeerId = new byte[20];
+            System.arraycopy(response, 48, receivedPeerId, 0, 20);
+            System.out.println("Peer ID: " + Torrent.bytesToHex(receivedPeerId));
 
             socket.close();
         } catch (IOException e) {
