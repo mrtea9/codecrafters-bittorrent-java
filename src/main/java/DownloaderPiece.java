@@ -13,5 +13,7 @@ public class DownloaderPiece {
         this.pieceIndex = pieceIndex;
         this.peer = new Peer(torrent);
         this.peer.performGetRequest();
+
+        System.out.println(this.peer.peersList);
     }
 }

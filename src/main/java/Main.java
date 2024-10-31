@@ -70,10 +70,6 @@ public class Main {
       Torrent torrent = new Torrent(trackerPath);
       DownloaderPiece downloaderPiece = new DownloaderPiece(torrent, fileToCreate, pieceIndex);
 
-      System.out.println(torrent.announce);
-      System.out.println(fileToCreate);
-      System.out.println(pieceIndex);
-
   }
 
   private static void printInfo(Torrent torrent) {

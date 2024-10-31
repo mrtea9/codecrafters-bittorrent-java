@@ -5,6 +5,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.dampcake.bencode.Bencode;
@@ -15,6 +17,7 @@ public class Peer {
     private final Torrent torrent;
     private static final Gson gson = new Gson();
     private final Bencode bencode = new Bencode(true);
+    public List<String> peersList = new ArrayList<>();
 
     public Peer(Torrent torrent) {
         this.torrent = torrent;
@@ -63,7 +66,7 @@ public class Peer {
         return request;
     }
 
-    private static void printIpFromBytes(byte[] bytes) throws UnknownHostException {
+    private void printIpFromBytes(byte[] bytes) throws UnknownHostException {
         for (int i = 0; i <= bytes.length - 6; i += 6) {
             // Extract 4 bytes for IP
             byte[] ipBytes = new byte[4];
@@ -74,6 +77,7 @@ public class Peer {
             int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
 
             System.out.println("Peer IP: " + ip + ":" + port);
+            this.peersList.add(ip + port);
         }
     }
 }
