@@ -63,8 +63,8 @@ public class Peer {
             peersBuffer.get(bytes);
             peersBuffer.rewind();
             System.out.println(Torrent.bytesToHex(bytes));
-            System.out.println(gson.toJson(peersBuffer));
-            System.out.println(gson.toJson(result));
+            //System.out.println(gson.toJson(peersBuffer));
+            //System.out.println(gson.toJson(result));
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
