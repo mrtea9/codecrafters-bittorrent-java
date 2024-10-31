@@ -6,6 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Map;
 
 import com.dampcake.bencode.Bencode;
 import com.dampcake.bencode.Type;
@@ -52,12 +53,8 @@ public class Peer {
             HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
             System.out.println("status code: " + response.statusCode());
             byte[] responseBodyBytes = response.body();
-            StringBuilder hexString = new StringBuilder(2 * responseBodyBytes.length);
-            for (byte b : responseBodyBytes) {
-                hexString.append(String.format("%02x", b));
-            }
-            System.out.println(gson.toJson(bencode.decode(responseBodyBytes, Type.DICTIONARY)));
-            System.out.println("response body in hex: " + hexString.toString());
+            Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
+            System.out.println(result.toString());
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
