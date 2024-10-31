@@ -21,7 +21,11 @@ public class Main {
           Torrent torrent = new Torrent(trackerPath);
 
           printInfo(torrent);
-      } else {
+      } else if ("peers".equals(command)) {
+          String trackerPath = args[1];
+          Torrent torrent = new Torrent(trackerPath);
+      }
+      else {
           System.out.println("Unknown command: " + command);
       }
   }
