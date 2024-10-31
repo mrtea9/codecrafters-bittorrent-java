@@ -39,7 +39,6 @@ public class Main {
   private static void processInfo(String trackerPath) {
       Torrent torrent = new Torrent(trackerPath);
 
-
       printInfo(torrent);
   }
 
