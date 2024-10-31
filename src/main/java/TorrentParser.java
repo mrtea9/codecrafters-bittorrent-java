@@ -2,6 +2,8 @@ import com.dampcake.bencode.Type;
 
 import java.io.IOException;
 import com.dampcake.bencode.Bencode;
+
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -36,7 +38,9 @@ public class TorrentParser {
         this.pieceLength = (long)info.get("piece length");
 
         Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
+        ByteBuffer piecesBuffer = (ByteBuffer)info1.get("pieces");
         System.out.println("info1 = " + info1.toString());
+        System.out.println("piecesBuffer = " + piecesBuffer.toString());
 
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
