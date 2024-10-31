@@ -1,8 +1,10 @@
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 public class Peer {
@@ -26,7 +28,11 @@ public class Peer {
 
         String peerId = "23141516167152146123";
         String full_request = (
-                this.torrent.announce + "?info_hash=" + this.torrent.infoHashBytes
+                this.torrent.announce + "?info_hash="
+                + URLEncoder.encode(
+                        new String(this.torrent.infoHashBytes, StandardCharsets.ISO_8859_1),
+                        StandardCharsets.ISO_8859_1
+                )
                 + "&peer_id=" + peerId + "&port=6881&uploaded=0&downloaded=0&left=" + this.torrent.length
                 + "&compact=1"
         );
