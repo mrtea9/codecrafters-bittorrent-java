@@ -2,8 +2,6 @@ import com.dampcake.bencode.Type;
 
 import java.io.IOException;
 import com.dampcake.bencode.Bencode;
-
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
@@ -20,12 +18,18 @@ public class TorrentParser {
     public long pieceLength;
 
     public TorrentParser(String trackerPath) {
-        Bencode bencode1 = new Bencode(true);
         this.trackerPath = trackerPath;
-        byte[] torrentData = parseTorrent();
+        getParams();
+    }
+
+    private void getParams() {
+        Bencode bencode1 = new Bencode(true);
+        byte[] torrentData = this.parseTorrent();
 
         Map<String, Object> decodedTorrent = decodeFile(torrentData);
         Map<String, Object> info = (Map<String, Object>)decodedTorrent.get("info");
+        System.out.println("decodedTorrent = " + decodedTorrent.toString());
+
 
         this.announce = (String) decodedTorrent.get("announce");
         this.length = (long)info.get("length");
@@ -34,8 +38,6 @@ public class TorrentParser {
         Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
-
-        printPieceHashes((String)info.get("pieces"));
     }
 
     private static void printPieceHashes(String pieces) {
@@ -69,7 +71,7 @@ public class TorrentParser {
     }
 
     private byte[] parseTorrent() {
-        Path path = Paths.get(trackerPath);
+        Path path = Paths.get(this.trackerPath);
         byte[] data = null;
 
         try {
