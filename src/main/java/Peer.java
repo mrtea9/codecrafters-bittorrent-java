@@ -59,7 +59,7 @@ public class Peer {
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             String peersString = (String) result.get("peers");
             byte[] peers = peersString.getBytes();
-            for (int i = 0; i < peers.length; i += 6) {
+            for (int i = 0; i < peers.length - 6; i += 6) {
                 byte[] peer = new byte[4];
                 byte[] portBytes = new byte[2];
                 System.arraycopy(peers, i, peer, 0, 4);
