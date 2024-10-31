@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 public class Peer {
     private final Torrent torrent;
     private static final Gson gson = new Gson();
-    private final Bencode bencode = new Bencode();
+    private final Bencode bencode = new Bencode(true);
 
     public Peer(Torrent torrent) {
         this.torrent = torrent;
