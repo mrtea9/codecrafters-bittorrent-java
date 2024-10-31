@@ -58,7 +58,7 @@ public class Peer {
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             String peersString = (String) result.get("peers");
             byte[] peersData = peersString.getBytes(StandardCharsets.ISO_8859_1);
-            for (int i = 0; i < peersData.length; i += 6) {
+            for (int i = 0; i < peersData.length - 6; i += 6) {
                 // Extract 4 bytes for IP
                 byte[] ipBytes = new byte[4];
                 System.arraycopy(peersData, i, ipBytes, 0, 4);
