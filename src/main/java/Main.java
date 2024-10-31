@@ -7,30 +7,52 @@ public class Main {
   private static final Gson gson = new Gson();
 
   public static void main(String[] args) throws Exception {
-    processInput(args);
-  }
-
-  private static void processInput(String[] args) {
       String command = args[0];
       if("decode".equals(command)) {
           String bencodedValue = args[1];
-          String decoded = getDecoded(bencodedValue);
 
-          System.out.println(decoded);
+          processDecode(bencodedValue);
       } else if ("info".equals(command)) {
           String trackerPath = args[1];
-          Torrent torrent = new Torrent(trackerPath);
 
-          printInfo(torrent);
+          processInfo(trackerPath);
       } else if ("peers".equals(command)) {
           String trackerPath = args[1];
-          Torrent torrent = new Torrent(trackerPath);
-          Peer peer = new Peer(torrent);
-          peer.performGetRequest();
-      }
-      else {
+
+          processPeers(trackerPath);
+      } else if ("handshake".equals(command)) {
+          String trackerPath = args[1];
+          String address = args[2];
+
+          processHandshake(trackerPath, address);
+      } else {
           System.out.println("Unknown command: " + command);
       }
+  }
+
+  private static void processDecode(String bencodedValue) {
+      String decoded = getDecoded(bencodedValue);
+
+      System.out.println(decoded);
+  }
+
+  private static void processInfo(String trackerPath) {
+      Torrent torrent = new Torrent(trackerPath);
+
+      printInfo(torrent);
+  }
+
+  private static void processPeers(String trackerPath) {
+      Torrent torrent = new Torrent(trackerPath);
+      Peer peer = new Peer(torrent);
+
+      peer.performGetRequest();
+  }
+
+  private static void processHandshake(String trackerPath, String address) {
+      Torrent torrent = new Torrent(trackerPath);
+
+      printInfo(torrent);
   }
 
   private static void printInfo(Torrent torrent) {
