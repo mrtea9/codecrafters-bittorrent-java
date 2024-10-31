@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.security.MessageDigest;
 
-public class TorrentParser {
+public class Torrent {
     private final Bencode bencode = new Bencode(false);
     private final String trackerPath;
     public String announce;
@@ -19,7 +19,7 @@ public class TorrentParser {
     public String infoHash;
     public long pieceLength;
 
-    public TorrentParser(String trackerPath) {
+    public Torrent(String trackerPath) {
         this.trackerPath = trackerPath;
         getParams();
     }
