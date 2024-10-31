@@ -42,16 +42,18 @@ public class Peer {
 
         HttpRequest request = HttpRequest.newBuilder(
                 URI.create(full_request))
-                .header("accept", "application/json")
+                .header("accept", "*/*")
                 .build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("status code: " + response.statusCode());
-            System.out.println("response body: " + response.body());
-            System.out.println("bytes to hex: " + new String(response.body().getBytes(), StandardCharsets.ISO_8859_1));
-            String decoded = Main.getDecoded(response.body());
-            System.out.println(decoded);
+            byte[] responseBodyBytes = response.body();
+            StringBuilder hexString = new StringBuilder(2 * responseBodyBytes.length);
+            for (byte b : responseBodyBytes) {
+                hexString.append(String.format("%02x", b));
+            }
+            System.out.println("response body in hex: " + hexString.toString());
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
