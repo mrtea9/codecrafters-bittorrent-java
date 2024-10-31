@@ -56,6 +56,7 @@ public class Main {
       int port = Integer.parseInt(address.substring(colonIndex + 1));
 
       PeerConnection peerConnection = new PeerConnection(ip, port);
+      peerConnection.creatingConnection();
   }
 
   private static void printInfo(Torrent torrent) {
