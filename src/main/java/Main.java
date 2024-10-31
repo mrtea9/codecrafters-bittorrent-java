@@ -51,8 +51,9 @@ public class Main {
 
   private static void processHandshake(String trackerPath, String address) {
       Torrent torrent = new Torrent(trackerPath);
-
-      System.out.println(address);
+      int colonIndex = address.indexOf(':');
+      String ip = address.substring(0, colonIndex);
+      System.out.println(ip);
   }
 
   private static void printInfo(Torrent torrent) {
