@@ -55,7 +55,7 @@ public class Main {
       String ip = address.substring(0, colonIndex);
       int port = Integer.parseInt(address.substring(colonIndex + 1));
 
-      PeerConnection peerConnection = new PeerConnection(ip, port);
+      PeerConnection peerConnection = new PeerConnection(ip, port, torrent);
       peerConnection.creatingConnection();
   }
 
