@@ -15,7 +15,6 @@ public class PeerConnection {
     }
 
     public void creatingConnection() {
-
         ByteBuffer handshake = constructHandshake(this.torrent);
 
         try {
@@ -37,7 +36,6 @@ public class PeerConnection {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private ByteBuffer constructHandshake(Torrent torrent) {
