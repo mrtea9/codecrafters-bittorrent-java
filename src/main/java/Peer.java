@@ -1,8 +1,5 @@
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.URLEncoder;
+import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -58,23 +55,25 @@ public class Peer {
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             ByteBuffer peersBuffer = (ByteBuffer)result.get("peers");
-            peersBuffer.rewind();
-            byte[] bytes = new byte[peersBuffer.remaining()];
-            peersBuffer.get(bytes);
-            peersBuffer.rewind();
-            for (int i = 0; i <= bytes.length - 6; i += 6) {
-                // Extract 4 bytes for IP
-                byte[] ipBytes = new byte[4];
-                System.arraycopy(bytes, i, ipBytes, 0, 4);
-                String ip = InetAddress.getByAddress(ipBytes).getHostAddress();
+            byte[] peersBytes = Torrent.ByteBufferToBytes(peersBuffer);
 
-                // Extract 2 bytes for port
-                int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
-
-                System.out.println("Peer IP: " + ip + ":" + port);
-            }
+            printIpFromBytes(peersBytes);
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private static void printIpFromBytes(byte[] bytes) throws UnknownHostException {
+        for (int i = 0; i <= bytes.length - 6; i += 6) {
+            // Extract 4 bytes for IP
+            byte[] ipBytes = new byte[4];
+            System.arraycopy(bytes, i, ipBytes, 0, 4);
+            String ip = InetAddress.getByAddress(ipBytes).getHostAddress();
+
+            // Extract 2 bytes for port
+            int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
+
+            System.out.println("Peer IP: " + ip + ":" + port);
         }
     }
 }

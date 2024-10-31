@@ -48,11 +48,19 @@ public class Torrent {
         this.infoHashBytes = calculateHash(infoEncoded);
     }
 
+    public static byte[] ByteBufferToBytes(ByteBuffer buffer) {
+        buffer.rewind();
+        byte[] bytes = new byte[buffer.remaining()];
+        buffer.get(bytes);
+        buffer.rewind();
+
+        return bytes;
+    }
+
     public void printPieceHashes() {
         ByteBuffer piecesBuffer = (ByteBuffer)this.infoBytes.get("pieces");
-        piecesBuffer.rewind();
-        byte[] bytes = new byte[piecesBuffer.remaining()];
-        System.out.println(bytesToHex(bytes));
+        byte[] piecesBytes = ByteBufferToBytes(piecesBuffer);
+        System.out.println(bytesToHex(piecesBytes));
     }
 
     private byte[] calculateHash(byte[] data) {
