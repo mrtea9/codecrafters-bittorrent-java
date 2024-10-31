@@ -29,6 +29,7 @@ public class Peer {
                 .header("accept", "application/json")
                 .build();
 
+        System.out.println("request = " + request.toString());
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("response body: " + response.body());
