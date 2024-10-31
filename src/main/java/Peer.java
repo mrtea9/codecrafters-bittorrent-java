@@ -46,7 +46,7 @@ public class Peer {
                 .build();
 
         try {
-            HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
             System.out.println("status code: " + response.statusCode());
             byte[] responseBodyBytes = response.body();
             StringBuilder hexString = new StringBuilder(2 * responseBodyBytes.length);
