@@ -26,7 +26,7 @@ public class Peer {
 
         String peerId = "23141516167152146123";
         String full_request = (
-                this.torrent.announce + "?info_hash=" + this.torrent.infoHash
+                this.torrent.announce + "?info_hash=" + this.torrent.infoHashBytes
                 + "&peer_id=" + peerId + "&port=6881&uploaded=0&downloaded=0&left=" + this.torrent.length
                 + "&compact=1"
         );

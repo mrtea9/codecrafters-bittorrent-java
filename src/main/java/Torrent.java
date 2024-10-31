@@ -20,6 +20,7 @@ public class Torrent {
     public long length;
     public String infoHash;
     public long pieceLength;
+    public byte[] infoHashBytes;
 
     public Torrent(String trackerPath) {
         this.trackerPath = trackerPath;
@@ -43,7 +44,8 @@ public class Torrent {
 
     private void getInfoHash(Map<String, Object> info1, Bencode bencode1) {
         byte[] infoEncoded = bencode1.encode(info1);
-        this.infoHash = calculateHash(infoEncoded);
+        this.infoHash = bytesToHex(calculateHash(infoEncoded));
+        this.infoHashBytes = calculateHash(infoEncoded);
     }
 
     public void printPieceHashes() {
@@ -55,17 +57,17 @@ public class Torrent {
         System.out.println(bytesToHex(bytes));
     }
 
-    private String calculateHash(byte[] data) {
+    private byte[] calculateHash(byte[] data) {
         byte[] hash = null;
         try {
             MessageDigest sha1 = MessageDigest.getInstance("SHA-1");
             sha1.update(data);
             hash = sha1.digest();
         } catch (NoSuchAlgorithmException e) {
-            return e.getMessage();
+            return e.getMessage().getBytes();
         }
 
-        return bytesToHex(hash);
+        return hash;
     }
 
     private static String bytesToHex(byte[] hash) {
