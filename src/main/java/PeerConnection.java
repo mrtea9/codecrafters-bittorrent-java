@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 public class PeerConnection {
     private String ip;
@@ -19,13 +20,16 @@ public class PeerConnection {
 
         try {
             Socket socket = new Socket(ip, port);
+            byte[] response = new byte[69];
+
             OutputStream out = socket.getOutputStream();
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            InputStream in = socket.getInputStream();
 
             out.write(handshake.array());
+            int bytesRead = in.read(response);
 
-            String response = in.readLine();
-            System.out.println(response);
+            System.out.println("bytesRead = " + bytesRead);
+            System.out.println("response = " + new String(response, StandardCharsets.UTF_8));
 
             socket.close();
         } catch (IOException e) {
