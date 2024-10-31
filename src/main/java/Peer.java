@@ -39,6 +39,8 @@ public class Peer {
         System.out.println("request = " + request.toString());
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("status code: " + response.statusCode());
+            System.out.println("headers: " + response.headers());
             System.out.println("response body: " + response.body());
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
