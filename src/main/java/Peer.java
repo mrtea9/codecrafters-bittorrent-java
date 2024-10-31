@@ -24,8 +24,15 @@ public class Peer {
 
         HttpClient client = HttpClient.newHttpClient();
 
+        String peerId = "23141516167152146123";
+        String full_request = (
+                this.torrent.announce + "?info_hash=" + this.torrent.infoHash
+                + "&peer_id=" + peerId + "&port=6881&uploaded=0&downloaded=0&left=" + this.torrent.length
+                + "&compact=1"
+        );
+
         HttpRequest request = HttpRequest.newBuilder(
-                URI.create(this.torrent.announce))
+                URI.create(full_request))
                 .header("accept", "application/json")
                 .build();
 
