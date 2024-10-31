@@ -5,6 +5,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
 import com.dampcake.bencode.Bencode;
 
 public class Peer {
@@ -47,7 +49,7 @@ public class Peer {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             System.out.println("status code: " + response.statusCode());
             System.out.println("response body: " + response.body());
-            System.out.println("bytes to hex: " + Torrent.bytesToHex(response.body().getBytes()));
+            System.out.println("bytes to hex: " + Arrays.toString(response.body().getBytes()));
             String decoded = Main.getDecoded(response.body());
             System.out.println(decoded);
         } catch (InterruptedException | IOException e) {
