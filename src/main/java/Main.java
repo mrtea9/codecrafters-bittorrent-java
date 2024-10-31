@@ -53,7 +53,7 @@ public class Main {
       Torrent torrent = new Torrent(trackerPath);
       int colonIndex = address.indexOf(':');
       String ip = address.substring(0, colonIndex);
-      int port = Integer.parseInt(address.substring(colonIndex));
+      int port = Integer.parseInt(address.substring(colonIndex + 1));
       System.out.println(ip + ":" + port);
   }
 
