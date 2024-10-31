@@ -71,11 +71,8 @@ public class Peer {
                 // Extract 2 bytes for port
                 int port = ((bytes[i + 4] & 0xFF) << 8) | (bytes[i + 5] & 0xFF);
 
-                System.out.println("Peer IP: " + ip + ", Port: " + port);
+                System.out.println("Peer IP: " + ip + ":" + port);
             }
-            System.out.println(Torrent.bytesToHex(bytes));
-            //System.out.println(gson.toJson(peersBuffer));
-            //System.out.println(gson.toJson(result));
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
         }
