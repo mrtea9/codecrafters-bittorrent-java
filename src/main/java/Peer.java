@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Map;
@@ -54,7 +55,12 @@ public class Peer {
             System.out.println("status code: " + response.statusCode());
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
-            byte[] peers = (byte[]) result.get("peers");
+            ByteBuffer peers = (ByteBuffer)result.get("peers");
+            peers.rewind();
+            byte[] bytes = new byte[peers.remaining()];
+            peers.get(bytes);
+            peers.rewind();
+            System.out.println(Arrays.toString(bytes));
             System.out.println(result.toString());
             System.out.println(gson.toJson(peers));
         } catch (InterruptedException | IOException e) {
