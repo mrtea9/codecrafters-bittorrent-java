@@ -26,7 +26,7 @@ public class Main {
           String trackerPath = args[1];
           Torrent torrent = new Torrent(trackerPath);
           Peer peer = new Peer(torrent);
-          System.out.println(peer.discoverPeers());
+          peer.performGetRequest();
       }
       else {
           System.out.println("Unknown command: " + command);

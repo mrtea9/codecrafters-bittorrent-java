@@ -21,12 +21,6 @@ public class Peer {
         this.torrent = torrent;
     }
 
-    public void discoverPeers() {
-        String full_address = this.torrent.announce;
-
-        performGetRequest();
-    }
-
     public void performGetRequest() {
 
         HttpClient client = HttpClient.newHttpClient();
