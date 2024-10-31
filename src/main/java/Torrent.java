@@ -14,6 +14,8 @@ import java.security.MessageDigest;
 public class Torrent {
     private final Bencode bencode = new Bencode(false);
     private final String trackerPath;
+    private final byte[] torrentData;
+    private Map<String, Object> infoBytes;
     public String announce;
     public long length;
     public String infoHash;
@@ -21,23 +23,22 @@ public class Torrent {
 
     public Torrent(String trackerPath) {
         this.trackerPath = trackerPath;
+        this.torrentData = this.parseTorrent();
         getParams();
     }
 
     private void getParams() {
         Bencode bencode1 = new Bencode(true);
-        byte[] torrentData = this.parseTorrent();
+        this.infoBytes = (Map<String, Object>)bencode1.decode(this.torrentData, Type.DICTIONARY).get("info");
 
-        Map<String, Object> decodedTorrent = decodeFile(torrentData);
+        Map<String, Object> decodedTorrent = decodeFile(this.torrentData);
         Map<String, Object> info = (Map<String, Object>)decodedTorrent.get("info");
-        Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
 
-        this.announce = (String) decodedTorrent.get("announce");
+        this.announce = (String)decodedTorrent.get("announce");
         this.length = (long)info.get("length");
         this.pieceLength = (long)info.get("piece length");
 
-        getInfoHash(info1, bencode1);
-        printPieceHashes(info1);
+        getInfoHash(this.infoBytes, bencode1);
     }
 
     private void getInfoHash(Map<String, Object> info1, Bencode bencode1) {
@@ -45,8 +46,8 @@ public class Torrent {
         this.infoHash = calculateHash(infoEncoded);
     }
 
-    private void printPieceHashes(Map<String, Object> info1) {
-        ByteBuffer piecesBuffer = (ByteBuffer)info1.get("pieces");
+    public void printPieceHashes() {
+        ByteBuffer piecesBuffer = (ByteBuffer)this.infoBytes.get("pieces");
         piecesBuffer.rewind();
         byte[] bytes = new byte[piecesBuffer.remaining()];
         piecesBuffer.get(bytes);

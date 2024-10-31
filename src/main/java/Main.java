@@ -24,6 +24,8 @@ public class Main {
       } else if ("peers".equals(command)) {
           String trackerPath = args[1];
           Torrent torrent = new Torrent(trackerPath);
+
+          System.out.println("este");
       }
       else {
           System.out.println("Unknown command: " + command);
@@ -35,6 +37,7 @@ public class Main {
       System.out.println("Length: " + torrent.length);
       System.out.println("Info Hash: " + torrent.infoHash);
       System.out.println("Piece Length: " + torrent.pieceLength);
+      torrent.printPieceHashes();
   }
 
   private static String getDecoded(String bencodedValue) {
