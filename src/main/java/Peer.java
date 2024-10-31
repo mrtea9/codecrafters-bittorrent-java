@@ -1,5 +1,8 @@
 import java.io.IOException;
-import java.net.*;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -52,15 +55,8 @@ public class Peer {
         try {
             HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
             System.out.println("status code: " + response.statusCode());
-            URL url = new URL(full_request);
-            HttpURLConnection connection =
-                    (HttpURLConnection)url.openConnection();
-            connection.setRequestMethod("GET");
-            int responseCode = connection.getResponseCode();
-            // System.out.println("responseCode = " + responseCode);
-            byte[] bytes = connection.getInputStream().readAllBytes();
-            Map<String, Object> result =
-                    bencode.decode(bytes, Type.DICTIONARY);
+            byte[] responseBodyBytes = response.body();
+            Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             ByteBuffer peersBuffer = (ByteBuffer)result.get("peers");
             System.out.println(gson.toJson(peersBuffer));
             System.out.println(gson.toJson(result));
