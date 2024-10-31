@@ -57,19 +57,8 @@ public class Peer {
             System.out.println("status code: " + response.statusCode());
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
-            String peersString = (String) result.get("peers");
-            byte[] peers = peersString.getBytes();
-            for (int i = 0; i < peers.length - 6; i += 6) {
-                byte[] peer = new byte[4];
-                byte[] portBytes = new byte[2];
-                System.arraycopy(peers, i, peer, 0, 4);
-                System.arraycopy(peers, i + 4, portBytes, 0, 2);
-                int port = ((portBytes[0] & 0xFF) << 8) | (portBytes[1] & 0xFF);
-                InetAddress ia = InetAddress.getByAddress(peer);
-                InetSocketAddress isa = new InetSocketAddress(ia, port);
-                System.out.println(isa.getAddress().getHostAddress() + ":" +
-                        isa.getPort());
-            }
+            ByteBuffer peersBuffer = (ByteBuffer)result.get("peers");
+            System.out.println(gson.toJson(peersBuffer));
             System.out.println(gson.toJson(result));
         } catch (InterruptedException | IOException e) {
             System.out.println(e.getMessage());
