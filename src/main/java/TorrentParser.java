@@ -30,28 +30,27 @@ public class TorrentParser {
 
         Map<String, Object> decodedTorrent = decodeFile(torrentData);
         Map<String, Object> info = (Map<String, Object>)decodedTorrent.get("info");
-        System.out.println("decodedTorrent = " + decodedTorrent.toString());
-        System.out.println("info = " + info.toString());
+        Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
 
         this.announce = (String) decodedTorrent.get("announce");
         this.length = (long)info.get("length");
         this.pieceLength = (long)info.get("piece length");
 
-        Map<String, Object> info1 =(Map<String, Object>)bencode1.decode(torrentData, Type.DICTIONARY).get("info");
-        ByteBuffer piecesBuffer = (ByteBuffer)info1.get("pieces");
-        System.out.println("info1 = " + info1.toString());
-        piecesBuffer.rewind();
-        byte[] bytes = new byte[piecesBuffer.remaining()];
-        piecesBuffer.get(bytes);
-        piecesBuffer.rewind();
-        System.out.println(bytesToHex(bytes));
+        getInfoHash(info1, bencode1);
+        printPieceHashes(info1);
+    }
 
+    private void getInfoHash(Map<String, Object> info1, Bencode bencode1) {
         byte[] infoEncoded = bencode1.encode(info1);
         this.infoHash = calculateHash(infoEncoded);
     }
 
-    private static void printPieceHashes(String pieces) {
-        byte[] bytes = pieces.getBytes();
+    private void printPieceHashes(Map<String, Object> info1) {
+        ByteBuffer piecesBuffer = (ByteBuffer)info1.get("pieces");
+        piecesBuffer.rewind();
+        byte[] bytes = new byte[piecesBuffer.remaining()];
+        piecesBuffer.get(bytes);
+        piecesBuffer.rewind();
         System.out.println(bytesToHex(bytes));
     }
 
