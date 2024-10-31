@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -57,17 +58,17 @@ public class Peer {
             byte[] responseBodyBytes = response.body();
             Map<String, Object> result = bencode.decode(responseBodyBytes, Type.DICTIONARY);
             String peersString = (String) result.get("peers");
-            byte[] peersData = peersString.getBytes();
-            for (int i = 0; i < peersData.length - 6; i += 6) {
-                // Extract 4 bytes for IP
-                byte[] ipBytes = new byte[4];
-                System.arraycopy(peersData, i, ipBytes, 0, 4);
-                String ip = InetAddress.getByAddress(ipBytes).getHostAddress();
-
-                // Extract 2 bytes for port
-                int port = ((peersData[i + 4] & 0xFF) << 8) | (peersData[i + 5] & 0xFF);
-
-                System.out.println("Peer IP: " + ip + ", Port: " + port);
+            byte[] peers = peersString.getBytes();
+            for (int i = 0; i < peers.length; i += 6) {
+                byte[] peer = new byte[4];
+                byte[] portBytes = new byte[2];
+                System.arraycopy(peers, i, peer, 0, 4);
+                System.arraycopy(peers, i + 4, portBytes, 0, 2);
+                int port = ((portBytes[0] & 0xFF) << 8) | (portBytes[1] & 0xFF);
+                InetAddress ia = InetAddress.getByAddress(peer);
+                InetSocketAddress isa = new InetSocketAddress(ia, port);
+                System.out.println(isa.getAddress().getHostAddress() + ":" +
+                        isa.getPort());
             }
             System.out.println(gson.toJson(result));
         } catch (InterruptedException | IOException e) {
