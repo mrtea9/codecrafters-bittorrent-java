@@ -52,7 +52,7 @@ public class Main {
   private static void processHandshake(String trackerPath, String address) {
       Torrent torrent = new Torrent(trackerPath);
 
-      printInfo(torrent);
+      System.out.println(address);
   }
 
   private static void printInfo(Torrent torrent) {
